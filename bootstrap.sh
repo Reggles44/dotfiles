@@ -29,7 +29,6 @@ link() {
     if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]; then
 
       local currentSrc="$(readlink $dst)"
-
       if [ "$currentSrc" == "$src" ]; then
 
         skip=true
@@ -86,20 +85,20 @@ link() {
   fi
 
   if [ "$skip" != "true" ]; then # "false" or empty
-    # ln -s "$1" "$2"
+    ln -s "$1" "$2"
     success "linked $1 to $2"
   fi
 
 }
 
 main() {
-  link "./gitconfig" "$HOME/.gitconfig"
-  link "./.zshrc" "$HOME/.zshrc"
+  local overwrite_all=false backup_all=false skip_all=false
 
-  git pull origin main
+  link "$HOME/dotfiles/.gitconfig" "$HOME/.gitconfig"
+  link "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"
 
   local src= dst=
-  for config in $(find . -type f -name config.json); do
+  for config in $(find -H "$HOME/dotfiles" -type f -name config.json); do
 
     src=$(dirname "$config")
     dst="$HOME/$(cat "$config" | jq -r ".\"$OSTYPE\"")"
