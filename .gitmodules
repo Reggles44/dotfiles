@@ -16,3 +16,6 @@
 [submodule "tmux/plugins/tmux-battery"]
 	path = tmux/plugins/tmux-battery
 	url = https://github.com/tmux-plugins/tmux-battery.git
+[submodule "tmux/plugins/tmux"]
+	path = tmux/plugins/tmux
+	url = https://github.com/catppuccin/tmux.git
