@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+show_help() {
+  echo "Usage: ${0##*/} [--help]"
+  echo ""
+  echo "Quickly select and connect to a Kubernetes pod with fuzzy finding."
+  echo ""
+  echo "Modes:"
+  echo "  No arguments    - Interactive selection with fzf"
+  echo "  --help          - Show this help message"
+  echo ""
+  echo "Examples:"
+  echo "  ${0##*/}             # Interactive pod selection"
+  echo "  ${0##*/} --help      # Show this help message"
+}
+
+if [[ $1 == "--help" ]]; then
+  show_help
+  exit 0
+fi
+
+selected=$(kubectl get pods --no-headers --all-namespaces=true | fzf)
+
+#No pod selected
+if [[ -z "$selected" ]]; then
+  echo "No pod matching filter: '$FILTER'"
+  exit 1
+fi
+
+read -r namespace pod _ <<<"$selected"
+kubectl -n "$namespace" exec -it "$pod" -- sh -c 'command -v bash >/dev/null && exec bash || exec sh'

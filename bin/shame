@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+
+show_help() {
+  echo "Usage: $0 [OPTIONS] TAG [TAG...]"
+  echo ""
+  echo "Build and push Docker images with the specified tags."
+  echo ""
+  echo "Options:"
+  echo "  -n, --name        Set the image name (default: current directory name)"
+  echo "  -r, --registry    Set the Docker registry (default: detected or docker.io)"
+  echo "  -f, --file        Set the docker file (default: Dockerfile)"
+  echo "  -h, --help        Show this help message"
+  echo ""
+  echo "Examples:"
+  echo "  $0 v1.0 v1.1"
+  echo "  $0 dev -f Dockerfile.dev"
+  echo "  $0 -n myapp -r my.registry.com latest stable"
+}
+
+get_docker_registry() {
+  local default_registry="docker.io"
+  local registry
+
+  # Try to extract registry from JSON output
+  registry=$(docker info --format '{{json .RegistryConfig.IndexConfigs}}' 2>/dev/null |
+    jq -r 'keys[0]' 2>/dev/null)
+
+  # If no registry found or command failed, use default
+  if [[ -z "$registry" || "$registry" == "null" ]]; then
+    echo "$default_registry"
+  else
+    echo "$registry"
+  fi
+}
+
+docker::shame() {
+  local registry="$1"
+  local app="$2"
+  local tag="$3"
+  local file="$4"
+  local url="$registry/$app:$tag"
+
+  echo Building "$app"
+  docker build --tag "$url" --file "$file" .
+  docker push "$url"
+}
+
+TAGS=()
+NAME=$(basename "$(pwd)")
+REGISTRY=$(get_docker_registry)
+FILE="Dockerfile"
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  -n | --name)
+    NAME="$2"
+    shift
+    shift
+    ;;
+  -r | --registry)
+    REGISTRY="$2"
+    shift
+    shift
+    ;;
+  -f | --file)
+    FILE="$2"
+    shift
+    shift
+    ;;
+  --help)
+    show_help
+    exit 0
+    ;;
+  *)
+    TAGS+=("$1")
+    shift
+    ;;
+  esac
+done
+
+if [ -z "${TAGS[@]}" ]; then
+
+  echo "No tags provided"
+  exit 1
+fi
+
+if [ ! -f "$FILE" ]; then
+  echo "$FILE does not exist in $(pwd)"
+  exit 1
+fi
+
+for TAG in $TAGS; do
+  docker::shame "$REGISTRY" "$NAME" "$TAG" "$FILE"
+done
