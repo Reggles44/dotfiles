@@ -78,6 +78,7 @@ source $ZSH/oh-my-zsh.sh
 export XDG_CONFIG_HOME=$HOME/.config
 
 VIM="nvim"
+alias vim="nvim"
 export GIT_EDITOR=$VIM
 
 export PATH=$HOME/bin:$PATH
@@ -87,10 +88,11 @@ export PATH=$PATH:/opt/homebrew/bin
 
 # Dotfiles
 export DOTFILES=$HOME/dotfiles
-alias update="(cd $DOTFILES && git pull --recurse-submodules && ./bootstrap)"
+update() {
+  bash $DOTFILES/install.sh
+  bash $DOTFILES/bootstrap.sh
+}
 
-alias vim="nvim"
-alias my_ip="ip address | grep -o \"inet 192.*/\" | awk '{ print \$2 }' | tr / ' ' | xargs"
 
 # Enable mise
 eval "$(mise activate zsh)"

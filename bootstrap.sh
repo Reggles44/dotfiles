@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+cd "$(dirname "$0")" || exit
+DOTFILES_ROOT=$(pwd -P)
+
 info() {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
 }
@@ -94,11 +97,11 @@ link() {
 main() {
   local overwrite_all=false backup_all=false skip_all=false
 
-  link "$HOME/dotfiles/.gitconfig" "$HOME/.gitconfig"
-  link "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"
+  link "$DOTFILES_ROOT/.gitconfig" "$HOME/.gitconfig"
+  link "$DOTFILES_ROOT/.zshrc" "$HOME/.zshrc"
 
   local src= dst=
-  for config in $(find -H "$HOME/dotfiles" -type f -name config.json); do
+  for config in $(find -H "$DOTFILES_ROOT" -type f -name config.json); do
 
     src=$(dirname "$config")
     dst="$HOME/$(cat "$config" | jq -r ".\"$OSTYPE\"")"
