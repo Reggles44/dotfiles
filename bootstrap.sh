@@ -120,7 +120,7 @@ main() {
   # elif [[ "$OSTYPE" == "freebsd"* ]]; then
   #         # ...
   else
-    echo "OSTYPE ($OSTYPE) does not match any config"
+    fail "OSTYPE ($OSTYPE) does not match any config"
   fi
 }
 
