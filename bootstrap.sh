@@ -100,14 +100,28 @@ main() {
   link "$DOTFILES_ROOT/.gitconfig" "$HOME/.gitconfig"
   link "$DOTFILES_ROOT/.zshrc" "$HOME/.zshrc"
 
-  local src= dst=
-  for config in $(find -H "$DOTFILES_ROOT" -type f -name config.json); do
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    link "$DOTFILES_ROOT/bin" "$HOME/bin"
+    link "$DOTFILES_ROOT/kitty" "$HOME/.config/kitty"
+    link "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
+    link "$DOTFILES_ROOT/tmux" "$HOME/.config/tmux"
 
-    src=$(dirname "$config")
-    dst="$HOME/$(cat "$config" | jq -r ".\"$OSTYPE\"")"
-    link "$src" "$dst"
-  done
-
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    link "$DOTFILES_ROOT/bin" "$HOME/bin"
+    link "$DOTFILES_ROOT/kitty" "$HOME/.config/kitty"
+    link "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
+    link "$DOTFILES_ROOT/tmux" "$HOME/.config/tmux"
+  # elif [[ "$OSTYPE" == "cygwin" ]]; then
+  #         # POSIX compatibility layer and Linux environment emulation for Windows
+  # elif [[ "$OSTYPE" == "msys" ]]; then
+  #         # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+  # elif [[ "$OSTYPE" == "win32" ]]; then
+  #         # I'm not sure this can happen.
+  # elif [[ "$OSTYPE" == "freebsd"* ]]; then
+  #         # ...
+  else
+    echo "OSTYPE ($OSTYPE) does not match any config"
+  fi
 }
 
 main
