@@ -99,6 +99,7 @@ main() {
 
   link "$DOTFILES_ROOT/.gitconfig" "$HOME/.gitconfig"
   link "$DOTFILES_ROOT/.zshrc" "$HOME/.zshrc"
+  link "$DOTFILES_ROOT/starship.toml" "$HOME/.config/starship.toml"
 
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     link "$DOTFILES_ROOT/bin" "$HOME/bin"
