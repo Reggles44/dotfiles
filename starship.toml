@@ -24,11 +24,11 @@ $sudo\
 $username\
 $character"""
 
-# $docker_context\
-# $package\
 
 right_format = """
 $directory\
+$docker_context\
+$package\
 $kubernetes\
 $c\
 $cpp\
