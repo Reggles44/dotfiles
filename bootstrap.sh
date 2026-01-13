@@ -98,20 +98,31 @@ main() {
   local overwrite_all=false backup_all=false skip_all=false
 
   link "$DOTFILES_ROOT/.gitconfig" "$HOME/.gitconfig"
-  link "$DOTFILES_ROOT/.zshrc" "$HOME/.zshrc"
   link "$DOTFILES_ROOT/starship.toml" "$HOME/.config/starship.toml"
+
+  # link "$DOTFILES_ROOT/.zshrc" "$HOME/.zshrc"
+  link "$DOTFILES_ROOT/.bashrc" "$HOME/.bashrc"
+  link "$DOTFILES_ROOT/.bash_profile" "$HOME/.bash_profile"
+  link "$DOTFILES_ROOT/.aliases" "$HOME/.aliases"
+  link "$DOTFILES_ROOT/.exports" "$HOME/.exports"
+  link "$DOTFILES_ROOT/.functions" "$HOME/.functions"
 
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     link "$DOTFILES_ROOT/bin" "$HOME/bin"
     link "$DOTFILES_ROOT/kitty" "$HOME/.config/kitty"
     link "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
     link "$DOTFILES_ROOT/tmux" "$HOME/.config/tmux"
+    link "$DOTFILES_ROOT/mise" "$HOME/.config/mise"
+    link "$DOTFILES_ROOT/hypr" "$HOME/.config/hypr"
 
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     link "$DOTFILES_ROOT/bin" "$HOME/bin"
     link "$DOTFILES_ROOT/kitty" "$HOME/.config/kitty"
     link "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
     link "$DOTFILES_ROOT/tmux" "$HOME/.config/tmux"
+    link "$DOTFILES_ROOT/mise" "$HOME/.config/mise"
+    link "$DOTFILES_ROOT/hypr" "$HOME/.config/hypr"
+
   # elif [[ "$OSTYPE" == "cygwin" ]]; then
   #         # POSIX compatibility layer and Linux environment emulation for Windows
   # elif [[ "$OSTYPE" == "msys" ]]; then
