@@ -28,86 +28,89 @@ PanelWindow {
     }
 
     Rectangle {
+      id: container_full
       height: parent.height
       width: parent.width
       radius: 15
 
-    }
+      // Top Left
+      Rectangle {
+          id: container_left_rect
+          height: parent.height
 
-    // Top Left
-    Rectangle {
-        id: container_left_rect
-        height: parent.height
-
-        anchors {
-            left: parent.left
-            verticalCenter: parent.verticalCenter
-        }
-
-        Row {
-            id: container_left
-            spacing: 10
-
-            anchors {
+          anchors {
               left: parent.left
-              leftMargin: 20
-              verticalCenter: parent.verticalCenter 
-            }
+              verticalCenter: parent.verticalCenter
+          }
 
-            Text { text: "⌂" }
-            Spacer {}
-            Text { text: "Left" }
-        }
-    }
+          Row {
+              id: container_left
+              spacing: 10
 
-    // Middle
-    Rectangle {
-        id: container_center_rect
-        height: parent.height
-        width: implicitWidth
-        color: "transparent"
+              anchors {
+                left: parent.left
+                leftMargin: 20
+                verticalCenter: parent.verticalCenter 
+              }
 
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-        }
-        
+              Text { text: "⌂" }
+              Spacer {}
+              Text { text: "Left" }
+          }
+      }
 
-        Row {
+        // Middle
+        Rectangle {
+            id: container_center_rect
+            height: parent.height
+            width: implicitWidth
+            color: "transparent"
+
             anchors {
                 horizontalCenter: parent.horizontalCenter
+            }
+            
+
+            Row {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+
+                Workspaces {}
+            }
+        }
+
+        // Right
+        Rectangle {
+            id: container_right_rect
+            height: parent.height
+            color: "transparent"
+
+            anchors {
+                left: container_center_rect.right
+                right: parent.right
                 verticalCenter: parent.verticalCenter
             }
 
-            Workspaces {}
-        }
-    }
+            Row {
+                id: container_right
+                spacing: 10
 
-    // Right
-    Rectangle {
-        id: container_right_rect
-        height: parent.height
-        color: "transparent"
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
 
-        anchors {
-            left: container_center_rect.right
-            right: parent.right
-            verticalCenter: parent.verticalCenter
-        }
+                CPU {}
+                Spacer {}
+                Memory {}
+                Spacer {}
+                Clock {}
+            }
 
-        Row {
-            id: container_right
-            spacing: 10
-
-            anchors.right: parent.right
-            anchors.rightMargin: 20
-            anchors.verticalCenter: parent.verticalCenter
-
-            CPU {}
-            Spacer {}
-            Memory {}
-            Spacer {}
-            Clock {}
         }
 
     }
+
+
 }

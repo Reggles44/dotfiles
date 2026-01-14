@@ -39,6 +39,10 @@ Text {
     }
 
     text: "CPU: " + cpuUsage + "%"
-    color: root.colYellow
-    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+    // color: root.colYellow
+    font {
+      // family: root.fontFamily;
+      // pixelSize: root.fontSize;
+      bold: true
+    }
 }

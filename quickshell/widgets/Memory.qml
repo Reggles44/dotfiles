@@ -33,6 +33,10 @@ Text {
     }
 
     text: "Mem: " + memUsage + "%"
-    color: root.colCyan
-    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+    // color: root.colCyan
+    font {
+      // family: root.fontFamily;
+      // pixelSize: root.fontSize;
+      bold: true
+    }
 }

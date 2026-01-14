@@ -4,15 +4,8 @@
 add_newline = true
 continuation_prompt = "[▸▹ ](dimmed white)"
 
-format = """(
-$nix_shell\
+format = """
 $container\
-$fill\
-$git_branch\
-$git_commit\
-$git_state\
-$git_status\
-$git_metrics\n)\
 $cmd_duration\
 $hostname\
 $localip\
@@ -27,6 +20,11 @@ $character"""
 
 right_format = """
 $directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$git_metrics\
 $docker_context\
 $package\
 $kubernetes\

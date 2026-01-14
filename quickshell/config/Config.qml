@@ -6,22 +6,6 @@ import Quickshell.Io
 import QtQuick
 
 Singleton {
-  id: root
-
-
-
-}
-
-
-pragma Singleton
-
-import qs.utils
-import Caelestia
-import Quickshell
-import Quickshell.Io
-import QtQuick
-
-Singleton {
     id: root
 
     property alias appearance: adapter.appearance
