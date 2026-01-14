@@ -13,7 +13,7 @@ PanelWindow {
 
     color: "transparent"
 
-    implicitHeight: 30
+    implicitHeight: 20
 
     anchors {
         top: true
@@ -21,24 +21,26 @@ PanelWindow {
         right: true
     }
 
+    margins {
+      top: 5
+      left: 5
+      right: 5
+    }
+
     Rectangle {
       height: parent.height
       width: parent.width
       radius: 15
-    }
 
+    }
 
     // Top Left
     Rectangle {
         id: container_left_rect
         height: parent.height
-        // width: implicitWidth
-        // color: "transparent"
-
 
         anchors {
             left: parent.left
-            // right: container_center_rect.left
             verticalCenter: parent.verticalCenter
         }
 
