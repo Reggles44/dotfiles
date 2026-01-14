@@ -114,6 +114,7 @@ main() {
     link "$DOTFILES_ROOT/tmux" "$HOME/.config/tmux"
     link "$DOTFILES_ROOT/mise" "$HOME/.config/mise"
     link "$DOTFILES_ROOT/hypr" "$HOME/.config/hypr"
+    link "$DOTFILES_ROOT/quickshell" "$HOME/.config/quickshell"
 
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     link "$DOTFILES_ROOT/bin" "$HOME/bin"
@@ -122,6 +123,7 @@ main() {
     link "$DOTFILES_ROOT/tmux" "$HOME/.config/tmux"
     link "$DOTFILES_ROOT/mise" "$HOME/.config/mise"
     link "$DOTFILES_ROOT/hypr" "$HOME/.config/hypr"
+    link "$DOTFILES_ROOT/quickshell" "$HOME/.config/quickshell"
 
   # elif [[ "$OSTYPE" == "cygwin" ]]; then
   #         # POSIX compatibility layer and Linux environment emulation for Windows
