@@ -19,7 +19,7 @@ git clone git@github.com:Reggles44/dotfiles.git ~/dotfiles
 ### Arch packages
 
 ```bash
-sudo pacman -S git xclip mise
+sudo pacman -S git networkmanager xclip mise
 ```
 
 #### Applications
@@ -38,5 +38,5 @@ sudo pacman -Sy steam
 #### Hyrpland
 
 ```bash
-sudo pacman -S waybar rofi
+sudo pacman -S quickshell rofi
 ```

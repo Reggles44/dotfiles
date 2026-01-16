@@ -2,41 +2,31 @@ import Quickshell
 import QtQuick
 import Quickshell.Wayland
 
+import "root:/components"
 
-Scope {
+Loader {
+    asynchronous: true
+    active: true // TODO: make a config values
+
     Variants {
         model: Quickshell.screens
 
-        WlrLayershell {
-            id: background
-            required property var modelData
+        StyledWindow {
+            id: win
+
+            required property ShellScreen modelData
+
             screen: modelData
-            layer: WlrLayer.Background
+            name: "background"
+            WlrLayershell.exclusionMode: ExclusionMode.Ignore
+            WlrLayershell.layer: WlrLayer.Background
 
-            visible: true
-            anchors {
-                top: true
-                bottom: true
-                left: true
-                right: true
-            }
+            anchors.top: true
+            anchors.bottom: true
+            anchors.left: true
+            anchors.right: true
 
-            exclusiveZone: ExclusionMode.Ignore
-            color: "transparent"
-
-            Image {
-                id: wallpaper
-                height: parent.height
-                width: parent.width
-
-                anchors {
-                  fill: parent
-                  verticalCenter: parent.verticalCenter
-                }
-
-                source: "/home/r/Downloads/background.jpg"
-
-            }
+            Wallpaper {}
         }
     }
 }
