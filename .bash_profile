@@ -23,7 +23,7 @@ fi
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
 # Enable mise
-eval "$(mise activate bash)"
+eval "$("$HOME"/.local/mise activate bash)"
 
 # Init Starship
 eval "$(starship init bash)"
