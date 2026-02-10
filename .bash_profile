@@ -1,5 +1,6 @@
 # Add `~/bin` to the `$PATH` 
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Load the shell dotfiles
 for file in ~/.{exports,aliases,functions,tools}; do
@@ -23,7 +24,7 @@ fi
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
 # Enable mise
-eval "$("$HOME"/.local/bin/mise activate bash)"
+eval "$(mise activate bash)"
 
 # Init Starship
 eval "$(starship init bash)"

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-curl https://mise.run | sh
-
 mise use --global fzf
 mise use --global go
 mise use --global gradle
