@@ -27,7 +27,7 @@ complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes Syste
 eval "$(mise activate bash)"
 
 # Init Starship
-eval "$(starship init bash)"
+# eval "$(starship init bash)"
 
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --bash)"
