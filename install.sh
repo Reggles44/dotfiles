@@ -2,76 +2,50 @@
 
 cd "$(dirname "$0")" || exit
 DOTFILES_ROOT=$(pwd -P)
-echo $DOTFILES_ROOT
-
-info() {
-  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
-
-user() {
-  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
-}
-
-success() {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
-
-fail() {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-  echo ''
-  exit
-}
 
 link() {
-	local src=$1 dst=$2
-	echo "SRC=${src} DST=${dst}"
+  local src=$1 dst=$2
 
-	if [[ -L "${dst}" ]]; then
-		rm -fv "${dst}"
-	fi
+  # If the destination is a link remove it
+  if [[ -L "${dst}" ]]; then
+    rm -fv "${dst}"
+  fi
 
-	if [ -d $src ]; then
-		echo "Linking directory"
-		mkdir -pv "${dst}"
-		for rel in $(git -C "${src}" ls-files --cached --others --exclude-standard); do
-			mkdir -pv "$(dirname "${dst}/${rel}"})"
-			ln -sfnv "${src}/${rel}" "${dst}/${rel}"
-		done
-	else
-		echo "Linking file"
-		ln -sfnv "${src}" "${dst}"
-	fi
-}
+  # If the source if a directory iterate over it to find all filtes to link
+  if [ -d $src ]; then
+    mkdir -pv "${dst}"
+    for rel in $(git -C "${src}" ls-files --cached --others --exclude-standard); do
+      mkdir -pv "$(dirname "${dst}/${rel}")"
+      ln -sfnv "${src}/${rel}" "${dst}/${rel}"
+    done
 
-main() {
-  local overwrite_all=false backup_all=false skip_all=false
-
-  link "$DOTFILES_ROOT/.gitconfig" "$HOME/.gitconfig"
-  link "$DOTFILES_ROOT/.bashrc" "$HOME/.bashrc"
-  link "$DOTFILES_ROOT/.bash_profile" "$HOME/.bash_profile"
-  # link "$DOTFILES_ROOT/.aliases" "$HOME/.aliases"
-  # link "$DOTFILES_ROOT/.exports" "$HOME/.exports"
-  # link "$DOTFILES_ROOT/.functions" "$HOME/.functions"
-
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    link "$DOTFILES_ROOT/local" "$HOME/local"
-    link "$DOTFILES_ROOT/config" "$HOME/.config"
-
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-    link "$DOTFILES_ROOT/local" "$HOME/local"
-    link "$DOTFILES_ROOT/config" "$HOME/.config"
-
-  # elif [[ "$OSTYPE" == "cygwin" ]]; then
-  #         # POSIX compatibility layer and Linux environment emulation for Windows
-  # elif [[ "$OSTYPE" == "msys" ]]; then
-  #         # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-  # elif [[ "$OSTYPE" == "win32" ]]; then
-  #         # I'm not sure this can happen.
-  # elif [[ "$OSTYPE" == "freebsd"* ]]; then
-  #         # ...
+  # If source is not a directory just link
   else
-    fail "OSTYPE ($OSTYPE) does not match any config"
+    ln -sfnv "${src}" "${dst}"
   fi
 }
 
-main
+echo ' '
+echo '--------------------------------------------------'
+echo "Pre Install"
+echo '--------------------------------------------------'
+
+echo ' '
+echo '--------------------------------------------------'
+echo "LINKING Dotfiles"
+echo '--------------------------------------------------'
+
+link "$DOTFILES_ROOT/.gitconfig" "$HOME/.gitconfig"
+link "$DOTFILES_ROOT/.bashrc" "$HOME/.bashrc"
+link "$DOTFILES_ROOT/.bash_profile" "$HOME/.bash_profile"
+link "$DOTFILES_ROOT/local" "$HOME/local"
+link "$DOTFILES_ROOT/config" "$HOME/.config"
+
+echo ' '
+echo '--------------------------------------------------'
+echo "Post Install"
+echo '--------------------------------------------------'
+
+curl -fsSL https://mise.run/bash | sh
+eval "$(mise activate bash)"
+mise install
